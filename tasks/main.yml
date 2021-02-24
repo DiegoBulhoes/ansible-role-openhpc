@@ -1,12 +1,4 @@
 ---
-
-- name: Select slurm service to control
-  set_fact:
-    openhpc_slurm_service: "{{ ohpc_slurm_services[item] }}"
-  loop: "{{ ohpc_slurm_services.keys() | list }}"
-  when: "openhpc_enable.get(item, false)"
-  tags: always
-
 - name: Install packages
   block:
     - include_tasks: install.yml
@@ -33,4 +25,3 @@
 - include: resume.yml
   when: openhpc_enable.resume | default(false) | bool
   delegate_to: "{{ openhpc_slurm_control_host }}"
-...
